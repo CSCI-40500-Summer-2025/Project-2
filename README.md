@@ -1,1 +1,10 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/V0iccz-y)
+# Project 2
+
+## Product Vision
+
+FOR students who have lost or found personal items on campus
+ WHO does not have a reliable way to report or search,
+ THE FoundIt is a web-based listing board
+ THAT lets students report, browse, and claim lost items
+ UNLIKE posting on random forums or flyers,
+ OUR app is centralized, searchable, and campus-verified.

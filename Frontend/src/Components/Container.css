@@ -1,0 +1,31 @@
+.lost-item {
+  text-align: center;
+  margin: 20px; 
+  border: 5px solid #ffffff;
+  border-radius: 10px; 
+  padding: 10px; 
+  display: inline-block; 
+  transition: transform 0.3s ease; 
+  background-color: #696969;
+}
+
+.lost-item img {
+  width: 200px; 
+  height: 200px; 
+  object-fit: cover; 
+  border-radius: 10px;
+}
+
+.lost-item h1 {
+  width: 200px;
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
+  text-align: center;
+  font-size: 16px;
+  margin: 5px auto;
+}
+
+
+.lost-item:hover {
+  transform: scale(1.05);
+}

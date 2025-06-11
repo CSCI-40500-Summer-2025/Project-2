@@ -9,11 +9,18 @@ const ReportFoundPage = () => {
     locationFound: '',
     contactInfo: '',
   });
-  const handleChange = (e) =>{
+  //figured it should have a picture dont know how to implement yet
+  const [picturFile, setPictureFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setPictureFile(e.target.files[0]);
+  }
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({...prevFormData, [name]: value}));
   };
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     // add data to server
     console.log('item report submitted:', formData);
@@ -78,6 +85,16 @@ const ReportFoundPage = () => {
           value = {formData.contactInfo}
           onChange = {handleChange}
           placeholder = "111-111-1111"
+          />
+        </label>
+        <label>
+          Upload a picture:
+          <input
+          type = "file"
+          name = "picture"
+          accept = "image/*"
+          //onChange = 
+          required
           />
         </label>
         <button type = "submit"> Submit </button>

@@ -1,12 +1,64 @@
-# React + Vite
+# Project 2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Product Vision
 
-Currently, two official plugins are available:
+FOR students who have lost or found personal items on campus
+ WHO does not have a reliable way to report or search,
+ THE FoundIt is a web-based listing board
+ THAT lets students report, browse, and claim lost items
+ UNLIKE posting on random forums or flyers,
+ OUR app is centralized, searchable, and campus-verified.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Using the Prototype
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Project Structure
+
+Our project is structured as a **mono-repo** 
+ 
+ **Frontend**: React app for prototype
+ 
+ **Backend**: Not implemented yet
+ 
+## ⚙️ Setup Instructions
+
+### ✅ Prerequisites
+
+Make sure you have:
+
+- [Node.js](https://nodejs.org/) installed
+- npm (comes with Node.js)
+
+# Clone the project-2 repo in terminal
+git clone https://github.com/CSCI-40500-Summer-2025/Project-2.git
+
+cd to the repo folder
+
+# Move into frontend project
+cd Frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+
+**After start , in the terminal you should see a local link for example http://localhost:5174**
+
+open the local url to see the project
+
+
+## Included Features:
+Hero section explaining the app
+
+Buttons to report a lost or found item
+
+Page for submitting a lost item or  (form)
+
+Page for submitting a found item (with image upload)
+
+Feed showing dummy posts (lost & found)
+
+Filter to show lost only / found only / all posts
+
+No database or backend is used, all content is static and simulated with dummy data.

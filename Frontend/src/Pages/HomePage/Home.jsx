@@ -80,7 +80,14 @@ const Home = () => {
           >
             I Lost Something
           </button>
-          <button className="found-btn">I Found Something</button>
+          <button
+            onClick={() => {
+              navigate("/report-found");
+            }}
+            className="found-btn"
+          >
+            I Found Something
+          </button>
         </div>
       </section>
 

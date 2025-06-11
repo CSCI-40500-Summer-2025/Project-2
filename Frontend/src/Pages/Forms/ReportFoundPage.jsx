@@ -1,103 +1,95 @@
 import React, { useState } from "react";
-//import './ReportFoundPage,css'; will use later for styling
+import "./ReportFoundPage.css";
 
 const ReportFoundPage = () => {
   const [formData, setFormData] = useState({
-    itemName: '',
-    itemDescription: '',
-    dateFound: '',
-    locationFound: '',
-    contactInfo: '',
+    title: "",
+    location: "",
+    description: "",
+    contact: "",
+    image: null,
   });
-  //figured it should have a picture dont know how to implement yet
-  const [picturFile, setPictureFile] = useState(null);
-
-  const handleFileChange = (e) => {
-    setPictureFile(e.target.files[0]);
-  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevFormData => ({...prevFormData, [name]: value}));
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setFormData({ ...formData, image: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add data to server
-    console.log('item report submitted:', formData);
-    //clears input
-    setFormData({
-      itemName: '',
-      itemDescription: '',
-      dateFound: '',
-      locationFound: '',
-      contactInfo: '',
-    })
-    alert('Thank you for reporting the item found!');
-  }
+    console.log("Found item submitted:", formData);
+    alert("✅ Found item reported!");
+    // TODO: upload to storage / save to Firestore if needed
+  };
+
   return (
-    <div>
-      <h1>Found an item?</h1>
-      <form onSubmit = {handleSubmit}>
+    <div className="report-found-container">
+      <h2>Report a Found Item</h2>
+      <form onSubmit={handleSubmit} className="found-form">
         <label>
-          Item Name:
+          Item Title:
           <input
-            type = "text"
-            name = "itemName"
-            value = {formData.itemName}
-            onChange = {handleChange}
+            type="text"
+            name="title"
+            placeholder="e.g., Found Umbrella"
+            value={formData.title}
+            onChange={handleChange}
             required
-            />
-        </label>
-        <label>
-          Item Description:
-          <input
-          type = "text"
-          name = "itemDescription"
-          value = {formData.itemDescription}
-          onChange = {handleChange}
           />
         </label>
-        <label>
-          Date Found:
-          <input
-          type = "date"
-          name = "dateFound"
-          value = {formData.dateFound}
-          onChange = {handleChange}
-          required
-          />
-        </label>
+
         <label>
           Location Found:
           <input
-          type = "text"
-          name = "locationFound"
-          value = {formData.locationFound}
-          onChange = {handleChange}
-          required
+            type="text"
+            name="location"
+            placeholder="e.g., Library, 3rd floor"
+            value={formData.location}
+            onChange={handleChange}
+            required
           />
         </label>
+
         <label>
-          Contact Information:
-          <input
-          type = "text"
-          name = "contactInfo"
-          value = {formData.contactInfo}
-          onChange = {handleChange}
-          placeholder = "111-111-1111"
+          Description:
+          <textarea
+            name="description"
+            placeholder="Describe the item in detail..."
+            value={formData.description}
+            onChange={handleChange}
+            required
           />
         </label>
+
         <label>
-          Upload a picture:
+          Your Contact (Email or Phone):
           <input
-          type = "file"
-          name = "picture"
-          accept = "image/*"
-          //onChange = 
-          required
+            type="text"
+            name="contact"
+            placeholder="e.g., you@example.com"
+            value={formData.contact}
+            onChange={handleChange}
+            required
           />
         </label>
-        <button type = "submit"> Submit </button>
+
+        <label>
+          Upload Image:
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </label>
+
+        <button type="submit" className="submit-btn">
+          Submit Found Report
+        </button>
       </form>
     </div>
   );

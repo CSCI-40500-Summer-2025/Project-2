@@ -11,6 +11,25 @@ FOR students who have lost or found personal items on campus
 
 ## Using the Prototype
 
+You can try the live version of our prototype here:
+
+🔗 [FoundIt Live Demo](https://founditapp.netlify.app)
+
+## Included Features:
+Hero section explaining the app
+
+Buttons to report a lost or found item
+
+Page for submitting a lost item (form)
+
+Page for submitting a found item (with image upload)
+
+Feed showing dummy posts (lost & found)
+
+Filter to show lost only / found only / all posts
+
+No database or backend is used, all content is static and simulated with dummy data.
+
 
 ## 📁 Project Structure
 
@@ -45,20 +64,5 @@ npm run dev
 
 **After start , in the terminal you should see a local link for example http://localhost:5174**
 
-open the local url to see the project
+open the local url to see the project live
 
-
-## Included Features:
-Hero section explaining the app
-
-Buttons to report a lost or found item
-
-Page for submitting a lost item or  (form)
-
-Page for submitting a found item (with image upload)
-
-Feed showing dummy posts (lost & found)
-
-Filter to show lost only / found only / all posts
-
-No database or backend is used, all content is static and simulated with dummy data.

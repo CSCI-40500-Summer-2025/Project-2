@@ -1,74 +1,124 @@
+:root {
+  --primary: #003366;
+  --lost-color: #ff4d4d;
+  --found-color: #4caf50;
+  --resolved-color: #28a745;
+  --action-blue: #007bff;
+  --background: #f5f7fa;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --text-dark: #333;
+  --text-light: #555;
+  --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .home-container {
-  font-family: Arial, sans-serif;
-  padding: 1.5rem;
-  max-width: 900px;
-  margin: 0 auto;
+  font-family: var(--font);
+  padding: 2rem 1.2rem;
+  max-width: 1200px;
+  margin: auto;
+  /* background-color: var(--background); */
 }
 
 /* Hero Section */
 .hero {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1.2rem 1rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  color: #003366;
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
 }
 
 .hero p {
-  margin: 1rem 0;
-  color: #444;
-  font-size: 1.1rem;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin: 0 auto 1rem;
+  max-width: 500px;
+  line-height: 1.4;
 }
 
 .hero-buttons {
-  margin-top: 1rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
 }
 
 .hero-buttons button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border: none;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.95rem;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .lost-btn {
-  background-color: #ff4d4d;
+  background-color: var(--lost-color);
   color: white;
 }
 
 .lost-btn:hover {
-  background-color: #e60000;
+  background-color: #e33434;
+  transform: scale(1.02);
 }
 
 .found-btn {
-  background-color: #4caf50;
+  background-color: var(--found-color);
   color: white;
 }
 
 .found-btn:hover {
-  background-color: #3d9140;
+  background-color: #3a9c3a;
+  transform: scale(1.02);
+}
+
+/* Filter Section */
+.filter-section {
+  text-align: center;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.filter-section p {
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+
+.filter-buttons button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  margin: 0.3rem;
+  transition: all 0.25s ease;
+}
+
+.filter-buttons button.active,
+.filter-buttons button:hover {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
 }
 
 /* Feed */
 .feed h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #222;
   text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
 }
 
 .loading-message {
   text-align: center;
+  color: var(--text-light);
   font-size: 1rem;
-  color: #555;
   margin: 2rem 0;
 }
 
@@ -76,43 +126,44 @@
 .post-card {
   display: flex;
   gap: 1rem;
-  background-color: #fdfdfd;
+  background-color: var(--card-bg);
   border-left: 6px solid #ccc;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease;
 }
 
 .post-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 .post-card.lost {
-  border-left-color: #ff4d4d;
+  border-left-color: var(--lost-color);
 }
 
 .post-card.found {
-  border-left-color: #4caf50;
+  border-left-color: var(--found-color);
 }
 
 .post-card img {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 /* Post Content */
 .post-content h3 {
-  margin: 0 0 0.5rem;
-  color: #333;
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+  color: var(--text-dark);
 }
 
 .post-content p {
-  margin: 0.2rem 0;
-  color: #555;
+  margin: 0.3rem 0;
+  color: var(--text-light);
 }
 
 .timestamp {
@@ -120,72 +171,53 @@
   color: #888;
 }
 
-/* Action Buttons */
+/* Post Actions */
 .post-actions {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 0.75rem;
+  margin-top: 0.8rem;
 }
 
 .delete-btn,
 .resolve-btn {
-  background-color: #ff4d4d;
-  color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 7px 14px;
   font-size: 0.9rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background-color: var(--lost-color);
+  color: white;
 }
 
 .delete-btn:hover {
-  background-color: #d11a2a;
+  background-color: #c72b2b;
 }
 
 .resolve-btn {
-  background-color: #007bff;
+  background-color: var(--action-blue);
+  color: white;
 }
 
 .resolve-btn:hover {
   background-color: #0056b3;
 }
 
-/* Resolved badge */
+/* Resolved Badge */
 .resolved-badge {
-  background-color: #28a745;
-  color: white;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.75rem;
   display: inline-block;
-  margin-top: 6px;
-  font-weight: bold;
-}
-
-/* Filters */
-.filter-section {
-  margin: 2rem 0 1rem;
-  text-align: center;
-}
-
-.filter-buttons button {
-  margin: 0.3rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filter-buttons button.active,
-.filter-buttons button:hover {
-  background-color: #003366;
+  margin-top: 0.6rem;
+  background-color: var(--resolved-color);
   color: white;
+  padding: 5px 12px;
+  font-size: 0.75rem;
   font-weight: bold;
+  border-radius: 20px;
 }
 
 /* Responsive */
@@ -206,6 +238,6 @@
   }
 
   .hero-buttons button {
-    width: 80%;
+    width: 90%;
   }
 }

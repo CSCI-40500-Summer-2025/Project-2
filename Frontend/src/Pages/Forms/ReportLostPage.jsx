@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./ReportLostPage.css";
+import { getOrCreateUserId } from "../../utils/userid";
+import { useNavigate } from "react-router";
 
 const ReportLostPage = () => {
   const [formData, setFormData] = useState({
@@ -8,17 +10,45 @@ const ReportLostPage = () => {
     description: "",
     contact: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Lost item submitted:", formData);
-    alert("✅ Lost item reported!");
-    // TODO: save to Firebase or wherever
+
+    const userId = getOrCreateUserId();
+
+    const postData = {
+      ...formData,
+      type: "lost",
+      date: new Date().toISOString(),
+      userId,
+    };
+
+    try {
+      const res = await fetch("http://localhost:5555/post/addpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to submit.");
+      }
+
+      alert("✅ Lost item reported!");
+      navigate("/");
+      setFormData({ title: "", location: "", description: "", contact: "" });
+    } catch (error) {
+      console.error("Error submitting lost post:", error.message);
+      alert("❌ Could not report lost item.");
+    }
   };
 
   return (

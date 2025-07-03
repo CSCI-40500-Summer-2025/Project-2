@@ -1,66 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router";
-
-const dummyPosts = [
-  {
-    id: 1,
-    type: "lost",
-    title: "Lost Umbrella",
-    location: "Library, 3rd floor",
-    description: "Black compact umbrella with a curved wooden handle.",
-    postedAt: "2025-06-10",
-    contact: "nina@email.com",
-  },
-  {
-    id: 2,
-    type: "found",
-    title: "Found Wallet",
-    location: "Cafeteria near vending machines",
-    description: "Brown leather wallet with ID for John Doe.",
-    postedAt: "2025-06-09",
-    contact: "security@hunter.cuny.edu",
-    image:
-      "https://www.brickunderground.com/sites/default/files/styles/new_blog_entry_primary_image_sm/public/2023-09/iStock-1414774073.jpg",
-  },
-  {
-    id: 3,
-    type: "lost",
-    title: "Lost Keys",
-    location: "Outside North Building entrance",
-    description: "Set of 3 keys on a blue keychain labeled 'Room 516'.",
-    postedAt: "2025-06-08",
-    contact: "marco.student@hunter.cuny.edu",
-  },
-  {
-    id: 4,
-    type: "found",
-    title: "Found Laptop Charger",
-    location: "Hunter west building, 6th floor",
-    description: "MacBook charger left plugged in near window seat.",
-    postedAt: "2025-06-08",
-    contact: "lisa.foundit@gmail.com",
-    image:
-      "https://i.redd.it/hey-guys-will-this-laptop-charger-i-found-in-storage-work-v0-jqjowaaosnub1.jpg?width=3024&format=pjpg&auto=webp&s=0acb0685fb1e5a413f5fa3cf8b65c282da1f9309",
-  },
-  {
-    id: 5,
-    type: "lost",
-    title: "Lost Textbook - Biology 101",
-    location: "7th floor Hunter east Building",
-    description: "Thick green book with name 'Samir P.' written inside cover.",
-    postedAt: "2025-06-07",
-    contact: "samir.bio@cuny.edu",
-  },
-];
+import { getOrCreateUserId } from "../../utils/userid";
 
 const Home = () => {
+  const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const userId = getOrCreateUserId();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("http://localhost:5555/post/allposts");
+        const data = await res.json();
+        setPosts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const filteredPosts =
-    filter === "all"
-      ? dummyPosts
-      : dummyPosts.filter((post) => post.type === filter);
+    filter === "all" ? posts : posts.filter((post) => post.type === filter);
+
+  const handleDelete = async (postId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:5555/post/deletepost/${postId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        }
+      );
+
+      if (res.ok) {
+        alert("✅ Post deleted.");
+        setPosts(posts.filter((p) => p._id !== postId));
+      } else {
+        const err = await res.json();
+        alert("❌ " + err.message);
+      }
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      alert("❌ Failed to delete post.");
+    }
+  };
+
+  const handleResolve = async (postId) => {
+    const confirmed = window.confirm("Mark this post as resolved?");
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`http://localhost:5555/post/resolve/${postId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("✅ Post marked as resolved.");
+        setPosts(
+          posts.map((p) => (p._id === postId ? { ...p, resolved: true } : p))
+        );
+      } else {
+        alert("❌ " + data.message);
+      }
+    } catch (err) {
+      console.error("Error resolving post:", err);
+      alert("❌ Failed to mark as resolved.");
+    }
+  };
 
   return (
     <div className="home-container">
@@ -72,18 +94,11 @@ const Home = () => {
           found something on campus.
         </p>
         <div className="hero-buttons">
-          <button
-            onClick={() => {
-              navigate("/report-lost");
-            }}
-            className="lost-btn"
-          >
+          <button onClick={() => navigate("/report-lost")} className="lost-btn">
             I Lost Something
           </button>
           <button
-            onClick={() => {
-              navigate("/report-found");
-            }}
+            onClick={() => navigate("/report-found")}
             className="found-btn"
           >
             I Found Something
@@ -117,24 +132,55 @@ const Home = () => {
 
       <section className="feed">
         <h2>Latest Posts</h2>
-        {filteredPosts.map((post) => (
-          <div className={`post-card ${post.type}`} key={post.id}>
-            {post.image && <img src={post.image} alt={post.title} />}
-            <div className="post-content">
-              <h3>{post.title}</h3>
-              <p>
-                <strong>Location:</strong> {post.location}
-              </p>
-              <p>
-                <strong>Description:</strong> {post.description}
-              </p>
-              <p>
-                <strong>Contact:</strong> {post.contact}
-              </p>
-              <p className="timestamp">Posted on {post.postedAt}</p>
+        {loading ? (
+          <p className="loading-message">Loading posts...</p>
+        ) : filteredPosts.length === 0 ? (
+          <p>No posts found.</p>
+        ) : (
+          filteredPosts.map((post) => (
+            <div className={`post-card ${post.type}`} key={post._id}>
+              {post.image && <img src={post.image} alt={post.title} />}
+              <div className="post-content">
+                <h3>{post.title}</h3>
+                <p>
+                  <strong>Location:</strong> {post.location}
+                </p>
+                <p>
+                  <strong>Description:</strong> {post.description}
+                </p>
+                <p>
+                  <strong>Contact:</strong> {post.contact}
+                </p>
+                <p className="timestamp">
+                  Posted on {new Date(post.date).toLocaleDateString()}
+                </p>
+
+                {/* Action Buttons for Post Owner */}
+                <div className="post-actions">
+                  {!post.resolved && post.userId === userId && (
+                    <button
+                      className="resolve-btn"
+                      onClick={() => handleResolve(post._id)}
+                    >
+                      ✅ Mark as Resolved
+                    </button>
+                  )}
+                  {post.userId === userId && (
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(post._id)}
+                    >
+                      🗑 Delete
+                    </button>
+                  )}
+                </div>
+                {post.resolved && (
+                  <span className="resolved-badge">✔ Resolved</span>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </section>
     </div>
   );

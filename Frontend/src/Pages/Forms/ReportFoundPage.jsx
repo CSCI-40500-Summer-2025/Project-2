@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./ReportFoundPage.css";
+import { getOrCreateUserId } from "../../utils/userid";
+import { useNavigate } from "react-router";
 
 const ReportFoundPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -19,11 +22,49 @@ const ReportFoundPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Found item submitted:", formData);
-    alert("✅ Found item reported!");
-    // TODO: upload to storage / save to Firestore if needed
+    const userId = getOrCreateUserId();
+
+    const postData = {
+      title: formData.title,
+      location: formData.location,
+      description: formData.description,
+      contact: formData.contact,
+      date: new Date().toISOString(),
+      type: "found",
+      userId,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5555/post/addpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit report.");
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+      alert("✅ Found item reported!");
+      navigate("/");
+      setFormData({
+        title: "",
+        location: "",
+        description: "",
+        contact: "",
+        image: null,
+      });
+    } catch (error) {
+      console.error("Submission error:", error.message);
+      alert("❌ Failed to report found item.");
+    }
   };
 
   return (
@@ -77,7 +118,7 @@ const ReportFoundPage = () => {
           />
         </label>
 
-        <label>
+        {/* <label>
           Upload Image:
           <input
             type="file"
@@ -85,7 +126,7 @@ const ReportFoundPage = () => {
             accept="image/*"
             onChange={handleChange}
           />
-        </label>
+        </label> */}
 
         <button type="submit" className="submit-btn">
           Submit Found Report

@@ -37,13 +37,16 @@ const ReportFoundPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5555/post/addpost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
+      const response = await fetch(
+        "https://project-2-hwiy.onrender.com/post/addpost",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

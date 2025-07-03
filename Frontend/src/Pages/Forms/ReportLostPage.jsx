@@ -29,13 +29,16 @@ const ReportLostPage = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5555/post/addpost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
+      const res = await fetch(
+        "https://project-2-hwiy.onrender.com/post/addpost",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
 
       if (!res.ok) {
         const errorData = await res.json();

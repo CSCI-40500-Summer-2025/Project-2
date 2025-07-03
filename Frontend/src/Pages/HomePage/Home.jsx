@@ -13,7 +13,9 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:5555/post/allposts");
+        const res = await fetch(
+          "https://project-2-hwiy.onrender.com/post/allposts"
+        );
         const data = await res.json();
         setPosts(data);
         setLoading(false);
@@ -37,7 +39,7 @@ const Home = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5555/post/deletepost/${postId}`,
+        `https://project-2-hwiy.onrender.com/post/deletepost/${postId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -63,11 +65,14 @@ const Home = () => {
     if (!confirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:5555/post/resolve/${postId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
+      const res = await fetch(
+        `https://project-2-hwiy.onrender.com/post/resolve/${postId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId }),
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {

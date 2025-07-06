@@ -19,7 +19,7 @@ You can try the live version of our prototype here:
 
 Hero section explaining the app
 
-Buttons to report a lost or found item
+Header with buttons to report a lost or found item
 
 Page for submitting a lost item
 

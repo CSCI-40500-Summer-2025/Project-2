@@ -25,7 +25,7 @@ Page for submitting a lost item
 
 Page for submitting a found item
 
-Feed showing dummy posts (lost & found)
+Feed showing users posts (lost & found)
 
 Filter to show lost only / found only / all posts
 

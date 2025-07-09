@@ -47,6 +47,9 @@ Our project is structured as a **mono-repo**
 
 ## 🏗️ Software Architecture
 
+![Architecture Diagram](/flowchart.png)
+
+
 ### ✅ Key Architectural Qualities
 
 - **Nonfunctional Characteristics**: Performance and responsiveness are critical so users can report and browse posts with minimal delay.

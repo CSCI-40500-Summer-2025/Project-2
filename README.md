@@ -96,21 +96,24 @@ Make sure you have:
 
 # Clone the project-2 repo in terminal
 
+``` 
 git clone https://github.com/CSCI-40500-Summer-2025/Project-2.git
 
 cd to the repo folder
+```
 
 # Move into frontend project
 
-cd Frontend
+``` cd Frontend ```
 
 # Install dependencies
 
-npm install
+``` npm install ```
 
 # Start the development server
-
+```
 npm run dev
+```
 
 **After start , in the terminal you should see a local link for example http://localhost:5174**
 
